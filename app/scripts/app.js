@@ -1,6 +1,16 @@
 /*global define */
-define([], function () {
+
+define([
+    'views/index'
+
+], function (indexView) {
     'use strict';
 
-    return '\'Allo \'Allo!';
+    var initialize = function() {
+        indexView.render();
+    };
+
+    return {
+        'initialize': initialize
+    };
 });
