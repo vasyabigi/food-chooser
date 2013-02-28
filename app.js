@@ -4,11 +4,12 @@
  */
 
 var express = require('express'),
+    app = express(),
     routes = require('./routes'),
     http = require('http'),
-    path = require('path');
-
-var app = express();
+    path = require('path'),
+    server = http.createServer(app),
+    io = require('socket.io').listen(server);
 
 app.configure(function(){
     app.set('port', process.env.PORT || 3000);
@@ -29,8 +30,16 @@ app.configure('development', function(){
     app.use(express.errorHandler());
 });
 
+
+server.listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
+});
+
 app.get('/', routes.index);
 
-http.createServer(app).listen(app.get('port'), function(){
-    console.log('Express server listening on port ' + app.get('port'));
+io.sockets.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
 });

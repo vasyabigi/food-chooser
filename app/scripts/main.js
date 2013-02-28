@@ -1,12 +1,13 @@
 require.config({
     paths: {
+        templates: '../templates',
         jquery: '../components/jquery/jquery',
         bootstrap: 'vendor/bootstrap',
         lodash: '../components/lodash/lodash',
         backbone: '../components/backbone/backbone',
         handlebars: '../components/handlebars/handlebars',
         text: '../components/requirejs-text/text',
-        templates: '../templates'
+        io: '../components/socket.io/dist/socket.io'
     },
     shim: {
         bootstrap: {
@@ -25,6 +26,10 @@ require.config({
 
         handlebars: {
             exports: 'Handlebars'
+        },
+
+        io: {
+            exports: 'io'
         }
     }
 });
@@ -32,11 +37,13 @@ require.config({
 require([
     'app',
     'jquery',
-    'bootstrap'
-], function (app, $) {
+    'ioo',
+    'bootstrap',
+], function (app, $, ioo) {
     'use strict';
 
     // use app here
     app.initialize();
+    ioo.ioo();
     console.log('Running jQuery %s', $().jquery);
 });
