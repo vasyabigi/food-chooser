@@ -2,6 +2,8 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/styles/main.css')
   body
     block content
+
+    script(data-main="scripts/main", src='/components/requirejs/require.js')
