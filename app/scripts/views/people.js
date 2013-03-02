@@ -3,19 +3,19 @@
 define([
     'backbone',
     // templates
-    'text!templates/index.hbs'
+    'text!templates/people.hbs'
 
-], function(Backbone, indexTemplate) {
+], function(Backbone, peopleTemplate) {
     'use strict';
 
-    var IndexView = Backbone.View.extend({
+    var PeopleView = Backbone.View.extend({
         el: '#content',
 
         render: function() {
-            this.$el.html(indexTemplate);
+            this.$el.html(peopleTemplate);
             return this;
         }
     });
 
-    return IndexView;
+    return PeopleView;
 });

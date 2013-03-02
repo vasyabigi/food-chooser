@@ -35,6 +35,7 @@ require('./models/person');
 
 // Routes
 app.get('/', routes.index);
+app.get('/people', routes.index);
 
 // REST API for people
 var people = require('./routes/people');

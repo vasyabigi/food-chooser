@@ -35,15 +35,16 @@ require.config({
 });
 
 require([
-    'app',
-    'jquery',
+    'backbone',
+    'router',
     'ioo',
-    'bootstrap',
-], function (app, $, ioo) {
+], function (Backbone, Router, ioo) {
     'use strict';
 
-    // use app here
-    app.initialize();
     ioo.ioo();
-    console.log('Running jQuery %s', $().jquery);
+
+    new Router();
+
+    Backbone.history.start({pushState: true});
+
 });
