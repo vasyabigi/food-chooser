@@ -11,6 +11,7 @@ define([
 
     var PersonCollection = Backbone.Collection.extend({
         model: PersonModel,
+
         url: '/api/telo'
     });
 

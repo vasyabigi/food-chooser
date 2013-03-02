@@ -5,8 +5,12 @@ define([
 
     // views
     'views/index',
-    'views/people'
-], function(Backbone, IndexView, PeopleView) {
+    'views/people',
+
+    // collections
+    'collections/people'
+
+], function(Backbone, IndexView, PeopleView, PeopleCollection) {
     'use strict';
 
     var AppRouter = Backbone.Router.extend({
@@ -32,8 +36,9 @@ define([
         },
 
         people: function() {
-            console.log('people');
-            this.changeView(new PeopleView());
+            this.changeView(new PeopleView({
+                collection: new PeopleCollection()
+            }));
         }
 
     });
