@@ -31,11 +31,12 @@ define([
         },
 
         index: function() {
-            console.log('index');
+            console.log('----- Index route.');
             this.changeView(new IndexView());
         },
 
         people: function() {
+            console.log('----- People route.');
             this.changeView(new PeopleView({
                 collection: new PeopleCollection()
             }));

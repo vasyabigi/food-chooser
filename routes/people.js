@@ -35,7 +35,7 @@ exports.postPerson = function( request, response ) {
 
 //Update a person
 exports.putPerson = function( request, response ) {
-    console.log( 'Updating book ' + request.body.title );
+    console.log( 'Updating person ' + request.body.name );
     return TeloModel.findById( request.params.id, function( err, telo ) {
         telo.name = request.body.name;
 
@@ -52,11 +52,11 @@ exports.putPerson = function( request, response ) {
 
 //Delete a person
 exports.deletePerson = function( request, response ) {
-    console.log( 'Deleting book with id: ' + request.params.id );
+    console.log( 'Deleting person with id: ' + request.params.id );
     return TeloModel.findById( request.params.id, function( err, telo ) {
         return telo.remove( function( err ) {
             if( !err ) {
-                console.log( 'Book removed' );
+                console.log( 'Person removed' );
                 return response.send( '' );
             } else {
                 console.log( err );

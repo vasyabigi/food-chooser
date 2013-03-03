@@ -32,6 +32,7 @@ app.configure(function(){
 
 // Models
 require('./models/person');
+require('./models/food');
 
 // Routes
 app.get('/', routes.index);
@@ -43,6 +44,13 @@ app.get( '/api/telo', people.getPerson);
 app.post( '/api/telo', people.postPerson);
 app.put( '/api/telo/:id', people.putPerson);
 app.delete( '/api/telo/:id', people.deletePerson);
+
+// REST API for foods
+var people = require('./routes/food');
+app.get( '/api/food', people.getFood);
+app.post( '/api/food', people.postFood);
+app.put( '/api/food/:id', people.putFood);
+app.delete( '/api/food/:id', people.deleteFood);
 
 app.configure('development', function(){
     app.use(express.errorHandler());

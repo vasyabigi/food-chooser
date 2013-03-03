@@ -11,7 +11,7 @@ define([
 
     var PersonView = Backbone.View.extend({
 
-        tagName: 'li',
+        tagName: 'td',
 
         template: Handlebars.compile(personTemplate),
 
