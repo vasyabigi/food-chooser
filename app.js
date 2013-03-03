@@ -61,8 +61,11 @@ server.listen(app.get('port'), function(){
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
+    socket.emit('online', { number: io.sockets.clients().length });
+    socket.broadcast.emit('online', { number: io.sockets.clients().length });
+});
+
+io.sockets.on('disconnect', function (socket) {
+    console.log('disconnecting');
+    socket.broadcast.emit('online', { number: io.sockets.clients().length });
 });

@@ -38,11 +38,8 @@ require([
     'jquery',
     'backbone',
     'router',
-    'ioo',
-], function ($, Backbone, Router, ioo) {
+], function ($, Backbone, Router) {
     'use strict';
-
-    ioo.ioo();
 
     new Router();
 

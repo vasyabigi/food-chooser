@@ -21,20 +21,19 @@ define([
         },
 
         initialize: function() {
+            this.render();
+
             this.collection.on('add', this.addPerson, this);
-
             this.collection.fetch({ update: true });
-        },
-
-        render: function() {
-            console.log('----- PeopleView rendered.');
-
-            this.$el.html(peopleTemplate);
 
             // vars from template
             this.$people = this.$('ul');
             this.$nameInput = this.$('input');
+        },
 
+        render: function() {
+            console.log('----- PeopleView rendered.');
+            this.$el.html(peopleTemplate);
             return this;
         },
 
