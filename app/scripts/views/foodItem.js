@@ -1,12 +1,13 @@
 /*global define */
 
 define([
+    'socket',
     'backbone',
     'handlebars',
 
     // templates
     'text!templates/foodItem.hbs'
-], function(Backbone, Handlebars, foodItemTemplate) {
+], function(socket, Backbone, Handlebars, foodItemTemplate) {
     'use strict';
 
     var FoodItemView = Backbone.View.extend({
@@ -29,9 +30,12 @@ define([
         },
 
         deleteFood: function() {
-            var r = window.confirm('Are you sire?');
+            var r = window.confirm('Are you sure?');
             if (r === true) {
-                this.model.destroy();
+                this.model.destroy({ wait: true, success: function() {
+                        socket.emit('food');
+                    }
+                });
             }
         },
 

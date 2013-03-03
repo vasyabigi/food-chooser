@@ -57,7 +57,7 @@ exports.deletePerson = function( request, response ) {
         return telo.remove( function( err ) {
             if( !err ) {
                 console.log( 'Person removed' );
-                return response.send( '' );
+                return response.send( {} );
             } else {
                 console.log( err );
             }

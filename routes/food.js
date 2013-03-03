@@ -59,7 +59,7 @@ exports.deleteFood = function( request, response ) {
         return food.remove( function( err ) {
             if( !err ) {
                 console.log( 'Food removed' );
-                return response.send( '' );
+                return response.send( {} );
             } else {
                 console.log( err );
             }

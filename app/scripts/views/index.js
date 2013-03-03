@@ -1,7 +1,7 @@
 /*global define */
 
 define([
-    'io',
+    'socket',
     'backbone',
     // templates
     'text!templates/index.hbs',
@@ -12,16 +12,17 @@ define([
     'views/indexPerson',
     'views/foods'
 
-], function(io, Backbone, indexTemplate, PeopleCollection, FoodCollection, PersonView, FoodView) {
+], function(socket, Backbone, indexTemplate, PeopleCollection, FoodCollection, PersonView, FoodView) {
     'use strict';
 
     var IndexView = Backbone.View.extend({
         el: '#content',
 
         initialize: function() {
+            console.log('----- IndexView rendered.');
             this.render();
 
-            this.socket = io.connect('http://localhost');
+            this.socket = socket;
 
             // People
             this.people = new PeopleCollection();
@@ -35,8 +36,6 @@ define([
             // vars from template
             this.$people = this.$('#people');
             this.$online = this.$('#online');
-
-            console.log(this.$online);
 
             // Count of online users
             this.onlineCount = 0;
@@ -55,6 +54,7 @@ define([
 
         updateOnlineCount: function() {
             var that = this;
+
             this.socket.on('online', function (data) {
                 if (that.onlineCount !== data.number) {
                     that.onlineCount = data.number;
