@@ -69,4 +69,8 @@ io.sockets.on('connection', function (socket) {
     socket.on('food', function() {
         socket.broadcast.emit('food');
     });
+
+    socket.on('disconnect', function () {
+        socket.broadcast.emit('online', { number: io.sockets.clients().length - 1 });
+    });
 });
