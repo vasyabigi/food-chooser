@@ -46,6 +46,18 @@ define([
         },
 
         createFood: function() {
+
+            // TODO: Validation
+            if (this.$foodTitleInput.val() === '') {
+                this.$foodTitleInput.focus();
+                return;
+            }
+
+            if (this.$foodPriceInput.val() === '') {
+                this.$foodPriceInput.focus();
+                return;
+            }
+
             this.collection.create({
                 'title': this.$foodTitleInput.val(),
                 'price': this.$foodPriceInput.val()
