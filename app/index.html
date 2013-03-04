@@ -18,15 +18,27 @@
     <body>
         <div class="container">
             <div class="hero-unit">
-                <h1>'Allo, 'Allo!</h1>
-                <p>You now have</p>
-                <ul>
-                    <li>HTML5 Boilerplate</li>
-                    <li>Twitter Bootstrap</li>
-                    <li>RequireJS</li>
-                </ul>
-                <p>installed.</p>
-                <h3>Enjoy coding! - Yeoman</h3>
+                <p class="text-right"><small><a href="/people">Manage people</a></small></p>
+                <p><small>Online: <span id="online">1</span></small></p>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr class="info" id="people"><td>Panda</td><td>Rambo</td><td>Zada</td><td>Овощь</td></tr>
+                    </tbody>
+                </table>
+                <div id="food">
+                    <form class="form-inline">
+                        <input id="foodTitle" class="span7" type="text" placeholder="Food name">
+                        <input id="foodPrice" class="span2" type="text" placeholder="Price">
+                        <button class="btn" type="button">Add</button>
+                    </form>
+                    <table class="table table-bordered table-hover">
+                        <tbody id="foods">
+                            <tr><td>Кашка "Яша"</td><td>10</td><td class="span1"><i class="icon-remove-circle"></i></td></tr>
+                            <tr><td>Пиво "Leffe"</td><td>25</td><td class="span1"><i class="icon-remove-circle"></i></td></tr>
+                            <tr><td>Торт "Наполеон"</td><td>12</td><td class="span1"><i class="icon-remove-circle"></i></td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
