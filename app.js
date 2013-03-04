@@ -60,8 +60,11 @@ server.listen(app.get('port'), function(){
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('online', { number: io.sockets.clients().length });
-    socket.broadcast.emit('online', { number: io.sockets.clients().length });
+
+    socket.on('online', function() {
+        socket.emit('online', { number: io.sockets.clients().length });
+        socket.broadcast.emit('online', { number: io.sockets.clients().length });
+    });
 
     socket.on('food', function() {
         socket.broadcast.emit('food');

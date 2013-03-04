@@ -22,8 +22,6 @@ define([
             console.log('----- IndexView rendered.');
             this.render();
 
-            this.socket = socket;
-
             // People
             this.people = new PeopleCollection();
             this.listenTo(this.people, 'add', this.addPerson);
@@ -55,7 +53,10 @@ define([
         updateOnlineCount: function() {
             var that = this;
 
-            this.socket.on('online', function (data) {
+            // Update online count
+            socket.emit('online');
+
+            socket.on('online', function (data) {
                 if (that.onlineCount !== data.number) {
                     that.onlineCount = data.number;
                     that.$online.html(that.onlineCount);
