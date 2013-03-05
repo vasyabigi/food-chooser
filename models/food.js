@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-//Person Schema
+//Food Schema
 var Food = new mongoose.Schema({
     title: String,
     price: Number

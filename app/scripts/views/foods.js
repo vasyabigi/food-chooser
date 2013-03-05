@@ -27,7 +27,7 @@ define([
             this.listenTo(this.collection, 'add', this.addFood);
             this.collection.fetch({ update: true });
 
-            this.receiveFood();
+            this.listenToFood();
         },
 
         render: function() {
@@ -63,8 +63,8 @@ define([
                 'price': this.$foodPriceInput.val()
             }, {
                 wait: true,
-                success: function() {
-                    socket.emit('food');
+                success: function(model) {
+                    socket.emit('food-created', { 'id': model.id });
                 }
             });
 
@@ -78,13 +78,15 @@ define([
             }
         },
 
-        receiveFood: function() {
+        listenToFood: function() {
             var that = this;
 
-            socket.on('food', function() {
-                that.collection.reset();
-                that.$foods.html('');
-                that.collection.fetch({ update: true });
+            socket.on('food-created', function(data) {
+                that.collection.add(data.food);
+            });
+
+            socket.on('food-deleted', function(data) {
+                that.collection.remove(data.id);
             });
         }
 

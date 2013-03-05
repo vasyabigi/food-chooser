@@ -22,6 +22,7 @@ define([
 
         initialize: function() {
             this.listenTo(this.model, 'destroy', this.desroyView);
+            this.listenTo(this.model, 'remove', this.desroyView);
         },
 
         render: function() {
@@ -32,8 +33,8 @@ define([
         deleteFood: function() {
             var r = window.confirm('Are you sure?');
             if (r === true) {
-                this.model.destroy({ wait: true, success: function() {
-                        socket.emit('food');
+                this.model.destroy({ wait: true, success: function(model) {
+                        socket.emit('food-deleted', { 'id': model.id });
                     }
                 });
             }

@@ -24,7 +24,7 @@ exports.postFood = function( request, response ) {
 
     food.save( function( err ) {
         if( !err ) {
-            return console.log( 'created' );
+            return console.log( 'Food created' );
         } else {
             return console.log( err );
         }
@@ -37,17 +37,20 @@ exports.postFood = function( request, response ) {
 //Update a food
 exports.putFood = function( request, response ) {
     console.log( 'Updating food ' + request.body.title );
+
     return FoodModel.findById( request.params.id, function( err, food ) {
+
         food.title = request.body.title;
         food.price = request.body.price;
 
         return food.save( function( err ) {
             if( !err ) {
-                console.log( 'food updated' );
+                console.log( 'Food updated' );
             } else {
                 console.log( err );
             }
             return response.send( food );
+
         });
     });
 };

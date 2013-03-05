@@ -45,7 +45,8 @@ app.put( '/api/telo/:id', people.putPerson);
 app.delete( '/api/telo/:id', people.deletePerson);
 
 // REST API for foods
-var people = require('./routes/food');
+var people = require('./routes/food'),
+    FoodModel = mongoose.model('Food');
 app.get( '/api/food', people.getFood);
 app.post( '/api/food', people.postFood);
 app.put( '/api/food/:id', people.putFood);
@@ -66,8 +67,16 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('online', { number: io.sockets.clients().length });
     });
 
-    socket.on('food', function() {
-        socket.broadcast.emit('food');
+    // If food created - need to tell it to all clients
+    socket.on('food-created', function(data) {
+        FoodModel.findById(data.id, function(err, food) {
+            socket.broadcast.emit('food-created', { 'food': food });
+        });
+    });
+
+    // If food deleted - need to tell it to all clients
+    socket.on('food-deleted', function(data) {
+        socket.broadcast.emit('food-deleted', { 'id': data.id });
     });
 
     socket.on('disconnect', function () {
