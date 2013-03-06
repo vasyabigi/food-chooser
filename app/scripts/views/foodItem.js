@@ -15,7 +15,8 @@ define([
         tagName: 'tr',
 
         events: {
-            'click i': 'deleteFood'
+            'click i': 'deleteFood',
+            'change .count': 'changeCount'
         },
 
         template: Handlebars.compile(foodItemTemplate),
@@ -23,6 +24,8 @@ define([
         initialize: function() {
             this.listenTo(this.model, 'destroy', this.desroyView);
             this.listenTo(this.model, 'remove', this.desroyView);
+            this.listenTo(this.model, 'change:count', this.changeTotal);
+            this.listenTo(this.model, 'change:total', this.render);
         },
 
         render: function() {
@@ -43,6 +46,15 @@ define([
         desroyView: function() {
             this.undelegateEvents();
             this.remove();
+        },
+
+        changeCount: function() {
+            var count = parseInt(this.$('.count').val(), 10);
+            this.model.set('count', count);
+        },
+
+        changeTotal: function() {
+            this.model.set('total', this.model.get('count') * this.model.get('price'));
         }
     });
 

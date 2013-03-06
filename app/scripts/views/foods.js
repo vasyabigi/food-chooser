@@ -25,6 +25,7 @@ define([
         initialize: function() {
             // Fetch all foods
             this.listenTo(this.collection, 'add', this.addFood);
+            this.listenTo(this.collection, 'change:total', this.changeTotal);
             this.collection.fetch({ update: true });
 
             this.listenToFood();
@@ -36,6 +37,7 @@ define([
             this.$foodTitleInput = this.$('#foodTitle');
             this.$foodPriceInput = this.$('#foodPrice');
             this.$foods = this.$('#foods');
+            this.$foodsTotal = this.$('#total');
             return this;
         },
 
@@ -88,6 +90,11 @@ define([
             socket.on('food-deleted', function(data) {
                 that.collection.remove(data.id);
             });
+        },
+
+        changeTotal: function() {
+            var total = this.collection.reduce(function(memo, model) { return memo + model.get('total'); }, 0);
+            this.$foodsTotal.html(total);
         }
 
     });
