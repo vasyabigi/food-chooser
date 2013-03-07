@@ -19,7 +19,9 @@ exports.postFood = function( request, response ) {
 
     var food = new FoodModel({
         title: request.body.title,
-        price: request.body.price
+        price: request.body.price,
+        count: request.body.count,
+        total: request.body.total
     });
 
     food.save( function( err ) {
@@ -42,6 +44,8 @@ exports.putFood = function( request, response ) {
 
         food.title = request.body.title;
         food.price = request.body.price;
+        food.count = request.body.count;
+        food.total = request.body.total;
 
         return food.save( function( err ) {
             if( !err ) {

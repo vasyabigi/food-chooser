@@ -55,6 +55,9 @@ define([
 
         changeTotal: function() {
             this.model.set('total', this.model.get('count') * this.model.get('price'));
+            this.model.save(null, { success: function(model) {
+                socket.emit('food-updated', { 'id': model.id });
+            }});
         }
     });
 

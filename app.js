@@ -74,6 +74,13 @@ io.sockets.on('connection', function (socket) {
         });
     });
 
+    // If food updated - need to tell it to all clients
+    socket.on('food-updated', function(data) {
+        FoodModel.findById(data.id, function(err, food) {
+            socket.broadcast.emit('food-updated', { 'food': food });
+        });
+    });
+
     // If food deleted - need to tell it to all clients
     socket.on('food-deleted', function(data) {
         socket.broadcast.emit('food-deleted', { 'id': data.id });

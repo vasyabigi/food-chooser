@@ -3,7 +3,9 @@ var mongoose = require('mongoose');
 //Food Schema
 var Food = new mongoose.Schema({
     title: String,
-    price: Number
+    price: Number,
+    count: Number,
+    total: Number
 });
 
 //Models

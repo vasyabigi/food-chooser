@@ -23,10 +23,17 @@ define([
         },
 
         initialize: function() {
+            var that = this;
+
             // Fetch all foods
             this.listenTo(this.collection, 'add', this.addFood);
             this.listenTo(this.collection, 'change:total', this.changeTotal);
-            this.collection.fetch({ update: true });
+            this.listenTo(this.collection, 'remove', this.changeTotal);
+
+            this.collection.fetch({ update: true, success: function() {
+                // Update total after fetching all food
+                that.changeTotal();
+            } });
 
             this.listenToFood();
         },
@@ -90,6 +97,11 @@ define([
             socket.on('food-deleted', function(data) {
                 that.collection.remove(data.id);
             });
+
+            socket.on('food-updated', function(data) {
+                that.collection.update(data.food, { add: false, remove: false });
+            });
+
         },
 
         changeTotal: function() {
