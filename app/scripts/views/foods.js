@@ -19,16 +19,18 @@ define([
 
         events: {
             'click button': 'createFood',
-            'keypress input': 'createFoodOnEnter',
+            'keypress #newFood': 'createFoodOnEnter',
+            'click #saveFood': 'saveFood',
+            'keypress #editFood': 'saveFoodOnEnter'
         },
 
         initialize: function() {
             var that = this;
 
-            // Fetch all foods
             this.listenTo(this.collection, 'add', this.addFood);
             this.listenTo(this.collection, 'change:total', this.changeTotal);
             this.listenTo(this.collection, 'remove', this.changeTotal);
+            this.listenTo(this.collection, 'editFood', this.editFood);
 
             this.collection.fetch({ update: true, success: function() {
                 // Update total after fetching all food
@@ -41,10 +43,17 @@ define([
         render: function() {
             this.$el.html(this.template());
 
+            // vars from template
             this.$foodTitleInput = this.$('#foodTitle');
             this.$foodPriceInput = this.$('#foodPrice');
             this.$foods = this.$('#foods');
             this.$foodsTotal = this.$('#total');
+
+            // Modal vars
+            this.$foodModal = this.$('#editFood');
+            this.$foodModalTitle = this.$('#editFoodTitle');
+            this.$foodModalPrice = this.$('#editFoodPrice');
+
             return this;
         },
 
@@ -107,6 +116,40 @@ define([
         changeTotal: function() {
             var total = this.collection.reduce(function(memo, model) { return memo + model.get('total'); }, 0);
             this.$foodsTotal.html(total);
+        },
+
+        editFood: function(model) {
+            this.editedModel = model;
+
+            this.$foodModalTitle.val(model.get('title'));
+            this.$foodModalPrice.val(model.get('price'));
+            this.$foodModal.modal('show');
+        },
+
+        saveFood: function() {
+            // TODO: Validation
+            if (this.$foodModalTitle.val() === '') {
+                this.$foodModalTitle.focus();
+                return;
+            }
+
+            if (this.$foodModalPrice.val() === '') {
+                this.$foodModalPrice.focus();
+                return;
+            }
+
+            this.editedModel.set({
+                'title': this.$foodModalTitle.val(),
+                'price': this.$foodModalPrice.val()
+            });
+
+            this.$foodModal.modal('hide');
+        },
+
+        saveFoodOnEnter: function(e) {
+            if(e.which === 13 && !e.shiftKey) {
+                this.saveFood();
+            }
         }
 
     });

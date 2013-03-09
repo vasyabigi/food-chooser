@@ -38,6 +38,7 @@ require([
     'jquery',
     'backbone',
     'router',
+    'bootstrap'
 ], function ($, Backbone, Router) {
     'use strict';
 

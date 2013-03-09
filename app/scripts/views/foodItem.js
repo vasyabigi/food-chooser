@@ -15,7 +15,8 @@ define([
         tagName: 'tr',
 
         events: {
-            'click i': 'deleteFood',
+            'click .icon-remove-circle': 'deleteFood',
+            'click .icon-edit': 'editFood',
             'change .count': 'changeCount'
         },
 
@@ -24,11 +25,19 @@ define([
         initialize: function() {
             this.listenTo(this.model, 'destroy', this.desroyView);
             this.listenTo(this.model, 'remove', this.desroyView);
+            this.listenTo(this.model, 'change', this.render);
+
+            // Change total events
             this.listenTo(this.model, 'change:count', this.changeTotal);
-            this.listenTo(this.model, 'change:total', this.render);
+            this.listenTo(this.model, 'change:price', this.changeTotal);
+
+            // Save model events
+            this.listenTo(this.model, 'change', this.saveFood);
+
         },
 
         render: function() {
+            console.log('rendered');
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
@@ -43,6 +52,10 @@ define([
             }
         },
 
+        editFood: function() {
+            this.model.trigger('editFood', this.model);
+        },
+
         desroyView: function() {
             this.undelegateEvents();
             this.remove();
@@ -55,9 +68,12 @@ define([
 
         changeTotal: function() {
             this.model.set('total', this.model.get('count') * this.model.get('price'));
+        },
+
+        saveFood: function() {
             this.model.save(null, { success: function(model) {
                 socket.emit('food-updated', { 'id': model.id });
-            }});
+            }, silent: true});
         }
     });
 

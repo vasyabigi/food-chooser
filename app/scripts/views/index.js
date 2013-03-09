@@ -29,7 +29,7 @@ define([
 
             // Food
             this.food = new FoodView({ collection: new FoodCollection() });
-            this.$('#food').html(this.food.render().el);
+            this.$('#food').replaceWith(this.food.render().el);
 
             // vars from template
             this.$people = this.$('#people');
