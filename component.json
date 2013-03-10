@@ -9,7 +9,8 @@
     "backbone": "~0.9.10",
     "lodash": "~1.0.1",
     "handlebars": "~1.0.0-rc.2",
-    "requirejs-text": "~2.0.5"
+    "requirejs-text": "~2.0.5",
+    "socket.io": "~0.9.11"
   },
   "devDependencies": {}
 }
